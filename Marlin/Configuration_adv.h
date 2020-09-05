@@ -137,8 +137,8 @@
  * THERMAL_PROTECTION_HYSTERESIS and/or THERMAL_PROTECTION_PERIOD
  */
 #if ENABLED(THERMAL_PROTECTION_HOTENDS)
-  #define THERMAL_PROTECTION_PERIOD 60        // Seconds
-  #define THERMAL_PROTECTION_HYSTERESIS 10    // Degrees Celsius
+  #define THERMAL_PROTECTION_PERIOD 40        // Seconds
+  #define THERMAL_PROTECTION_HYSTERESIS 4     // Degrees Celsius
 
   //#define ADAPTIVE_FAN_SLOWING              // Slow part cooling fan if temperature drops
   #if BOTH(ADAPTIVE_FAN_SLOWING, PIDTEMP)
@@ -157,7 +157,7 @@
    * and/or decrease WATCH_TEMP_INCREASE. WATCH_TEMP_INCREASE should not be set
    * below 2.
    */
-  #define WATCH_TEMP_PERIOD 30                // Seconds
+  #define WATCH_TEMP_PERIOD 20                // Seconds
   #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
@@ -165,13 +165,13 @@
  * Thermal Protection parameters for the bed are just as above for hotends.
  */
 #if ENABLED(THERMAL_PROTECTION_BED)
-  #define THERMAL_PROTECTION_BED_PERIOD 60    // Seconds
-  #define THERMAL_PROTECTION_BED_HYSTERESIS 4 // Degrees Celsius
+  #define THERMAL_PROTECTION_BED_PERIOD 20    // Seconds
+  #define THERMAL_PROTECTION_BED_HYSTERESIS 2 // Degrees Celsius
 
   /**
    * As described above, except for the bed (M140/M190/M303).
    */
-  #define WATCH_BED_TEMP_PERIOD 120                // Seconds
+  #define WATCH_BED_TEMP_PERIOD 60                // Seconds
   #define WATCH_BED_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
@@ -338,7 +338,7 @@
 // When first starting the main fan, run it at full speed for the
 // given number of milliseconds.  This gets the fan spinning reliably
 // before setting a PWM value. (Does not work with software PWM for fan on Sanguinololu)
-//#define FAN_KICKSTART_TIME 100
+#define FAN_KICKSTART_TIME 100
 
 // Some coolers may require a non-zero "off" state.
 //#define FAN_OFF_PWM  1
@@ -399,7 +399,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+#define E0_AUTO_FAN_PIN P2_04
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -493,6 +493,7 @@
   #endif
 #endif
 
+//#define Z_DUAL_STEPPER_DRIVERS
 #if ENABLED(Z_DUAL_STEPPER_DRIVERS)
   //#define Z_DUAL_ENDSTOPS
   #if ENABLED(Z_DUAL_ENDSTOPS)
@@ -568,10 +569,10 @@
 // @section homing
 
 // Homing hits each endstop, retracts by these distances, then does a slower bump.
-#define X_HOME_BUMP_MM 7
-#define Y_HOME_BUMP_MM 7
-#define Z_HOME_BUMP_MM 3
-#define HOMING_BUMP_DIVISOR { 3, 3, 5 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+#define X_HOME_BUMP_MM 5
+#define Y_HOME_BUMP_MM 5
+#define Z_HOME_BUMP_MM 2
+#define HOMING_BUMP_DIVISOR { 2, 2, 4 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
 #define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
 //#define HOMING_BACKOFF_MM { 2, 2, 2 }  // (mm) Move away from the endstops after homing
 
@@ -599,7 +600,7 @@
 
   // Safety: The probe needs time to recognize the command.
   //         Minimum command delay (ms). Enable and increase if needed.
-  //#define BLTOUCH_DELAY 500
+  #define BLTOUCH_DELAY 200
 
   /**
    * Settings for BLTOUCH Classic 1.2, 1.3 or BLTouch Smart 1.0, 2.0, 2.2, 3.0, 3.1, and most clones:
@@ -655,7 +656,7 @@
 //#define Z_STEPPER_AUTO_ALIGN
 #if ENABLED(Z_STEPPER_AUTO_ALIGN)
   // Define probe X and Y positions for Z1, Z2 [, Z3]
-  #define Z_STEPPER_ALIGN_XY { {  10, 290 }, { 150,  10 }, { 290, 290 } }
+  #define Z_STEPPER_ALIGN_XY { {  10, 190 }, { 100,  10 }, { 190, 190 } }
 
   // Provide Z stepper positions for more rapid convergence in bed alignment.
   // Currently requires triple stepper drivers.
@@ -701,7 +702,7 @@
 // Default stepper release if idle. Set to 0 to deactivate.
 // Steppers will shut down DEFAULT_STEPPER_DEACTIVE_TIME seconds after the last move when DISABLE_INACTIVE_? is true.
 // Time can be set by M18 and M84.
-#define DEFAULT_STEPPER_DEACTIVE_TIME 0
+#define DEFAULT_STEPPER_DEACTIVE_TIME 120
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
 #define DISABLE_INACTIVE_Z true  // Set to false if the nozzle will fall down on your printed part when print has finished.
@@ -901,8 +902,8 @@
 // Change values more rapidly when the encoder is rotated faster
 #define ENCODER_RATE_MULTIPLIER
 #if ENABLED(ENCODER_RATE_MULTIPLIER)
-  #define ENCODER_10X_STEPS_PER_SEC   30  // (steps/s) Encoder rate for 10x speed
-  #define ENCODER_100X_STEPS_PER_SEC  80  // (steps/s) Encoder rate for 100x speed
+  #define ENCODER_10X_STEPS_PER_SEC   75  // (steps/s) Encoder rate for 10x speed
+  #define ENCODER_100X_STEPS_PER_SEC  160  // (steps/s) Encoder rate for 100x speed
 #endif
 
 // Play a beep when the feedrate is changed from the Status Screen
@@ -946,13 +947,13 @@
 #define STATUS_MESSAGE_SCROLLING
 
 // On the Info Screen, display XY with one decimal place when possible
-#define LCD_DECIMAL_SMALL_XY
+//#define LCD_DECIMAL_SMALL_XY
 
 // The timeout (in ms) to return to the status screen from sub-menus
 //#define LCD_TIMEOUT_TO_STATUS 15000
 
 // Add an 'M73' G-code to set the current percentage
-//#define LCD_SET_PROGRESS_MANUALLY
+#define LCD_SET_PROGRESS_MANUALLY
 
 // Show the E position (filament used) during printing
 //#define LCD_SHOW_E_TOTAL
@@ -1365,15 +1366,15 @@
  *
  * Warning: Does not respect endstops!
  */
-//#define BABYSTEPPING
+#define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define BABYSTEP_WITHOUT_HOMING
   //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   #define BABYSTEP_INVERT_Z false           // Change if Z babysteps should go the other way
   #define BABYSTEP_MULTIPLICATOR_Z  10       // Babysteps are very small. Increase for faster motion.
-  #define BABYSTEP_MULTIPLICATOR_XY 10
+  #define BABYSTEP_MULTIPLICATOR_XY 1
 
-  #define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
+  //#define DOUBLECLICK_FOR_Z_BABYSTEPPING  // Double-click on the Status Screen for Z Babystepping.
   #if ENABLED(DOUBLECLICK_FOR_Z_BABYSTEPPING)
     #define DOUBLECLICK_MAX_INTERVAL 1250   // Maximum interval between clicks, in milliseconds.
                                             // Note: Extra time may be added to mitigate controller latency.
@@ -1386,9 +1387,7 @@
 
   //#define BABYSTEP_DISPLAY_TOTAL          // Display total babysteps since last G28
 
-  #if ANY(BLTOUCH, SN04, INDUCTIVE_NO, INDUCTIVE_NC, SERVO_PROBE, NOZZLE_PROBE)
-    #define BABYSTEP_ZPROBE_OFFSET          // Combine M851 Z and Babystepping
-  #endif
+  #define BABYSTEP_ZPROBE_OFFSET          // Combine M851 Z and Babystepping
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     //#define BABYSTEP_HOTEND_Z_OFFSET      // For multiple hotends, babystep relative Z offsets
     //#define BABYSTEP_ZPROBE_GFX_OVERLAY   // Enable graphical overlay on Z-offset editor
@@ -1413,10 +1412,10 @@
  * See http://marlinfw.org/docs/features/lin_advance.html for full instructions.
  * Mention @Sebastianv650 on GitHub to alert the author of any issues.
  */
-#define LIN_ADVANCE
+//#define LIN_ADVANCE
 #if ENABLED(LIN_ADVANCE)
   //#define EXTRA_LIN_ADVANCE_K // Enable for second linear advance constants
-  #define LIN_ADVANCE_K 0       // Unit: mm compression per 1mm/s extruder speed
+  #define LIN_ADVANCE_K 0.22    // Unit: mm compression per 1mm/s extruder speed
   //#define LA_DEBUG            // If enabled, this will generate debug information output over USB.
 #endif
 
@@ -1489,7 +1488,7 @@
 //
 // G2/G3 Arc Support
 //
-//#define ARC_SUPPORT               // Disable this feature to save ~3226 bytes
+#define ARC_SUPPORT               // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
   #define MM_PER_ARC_SEGMENT  1   // Length of each arc segment
   #define MIN_ARC_SEGMENTS   24   // Minimum number of segments in a complete circle
@@ -1544,17 +1543,17 @@
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
-//#define MINIMUM_STEPPER_PULSE 2
+//#define MINIMUM_STEPPER_PULSE 1
 
 /**
  * Maximum stepping rate (in Hz) the stepper driver allows
  *  If undefined, defaults to 1MHz / (2 * MINIMUM_STEPPER_PULSE)
- *  500000 : Maximum for A4988 stepper driver
- *  400000 : Maximum for TMC2xxx stepper drivers
- *  250000 : Maximum for DRV8825 stepper driver
- *  200000 : Maximum for LV8729 stepper driver
- *  150000 : Maximum for TB6600 stepper driver
- *   15000 : Maximum for TB6560 stepper driver
+ *  5000000 : Maximum for TMC2xxx stepper drivers
+ *  1000000 : Maximum for LV8729 stepper driver
+ *  500000  : Maximum for A4988 stepper driver
+ *  250000  : Maximum for DRV8825 stepper driver
+ *  150000  : Maximum for TB6600 stepper driver
+ *   15000  : Maximum for TB6560 stepper driver
  *
  * Override the default value based on the driver type set in Configuration.h.
  */
@@ -1723,23 +1722,23 @@
  * Requires NOZZLE_PARK_FEATURE.
  * This feature is required for the default FILAMENT_RUNOUT_SCRIPT.
  */
-#define ADVANCED_PAUSE_FEATURE
+//#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #define PAUSE_PARK_RETRACT_FEEDRATE         60  // (mm/s) Initial retract feedrate.
   #define PAUSE_PARK_RETRACT_LENGTH            2  // (mm) Initial retract.
                                                   // This short retract is done immediately, before parking the nozzle.
   #define FILAMENT_CHANGE_UNLOAD_FEEDRATE     10  // (mm/s) Unload filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_UNLOAD_ACCEL        25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_UNLOAD_LENGTH      650  // (mm) The length of filament for a complete unload.
+  #define FILAMENT_CHANGE_UNLOAD_LENGTH      100  // (mm) The length of filament for a complete unload.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
                                                   //   Set to 0 for manual unloading.
-  #define FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE   5  // (mm/s) Slow move when starting load.
-  #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH    50  // (mm) Slow length, to allow time to insert material.
+  #define FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE   6  // (mm/s) Slow move when starting load.
+  #define FILAMENT_CHANGE_SLOW_LOAD_LENGTH     0  // (mm) Slow length, to allow time to insert material.
                                                   // 0 to disable start loading and skip to fast load only
-  #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE  10  // (mm/s) Load filament feedrate. This can be pretty fast.
+  #define FILAMENT_CHANGE_FAST_LOAD_FEEDRATE   6  // (mm/s) Load filament feedrate. This can be pretty fast.
   #define FILAMENT_CHANGE_FAST_LOAD_ACCEL     25  // (mm/s^2) Lower acceleration may allow a faster feedrate.
-  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH   550  // (mm) Load length of filament, from extruder gear to nozzle.
+  #define FILAMENT_CHANGE_FAST_LOAD_LENGTH     0  // (mm) Load length of filament, from extruder gear to nozzle.
                                                   //   For Bowden, the full length of the tube and nozzle.
                                                   //   For direct drive, the full length of the nozzle.
   //#define ADVANCED_PAUSE_CONTINUOUS_PURGE       // Purge continuously up to the purge length until interrupted.
@@ -1756,15 +1755,15 @@
   #define FILAMENT_UNLOAD_PURGE_DELAY       5000  // (ms) Delay for the filament to cool after retract.
   #define FILAMENT_UNLOAD_PURGE_LENGTH         8  // (mm) An unretract is done, then this length is purged.
 
-  #define PAUSE_PARK_NOZZLE_TIMEOUT          240  // (seconds) Time limit before the nozzle is turned off for safety.
+  #define PAUSE_PARK_NOZZLE_TIMEOUT           45  // (seconds) Time limit before the nozzle is turned off for safety.
   #define FILAMENT_CHANGE_ALERT_BEEPS         10  // Number of alert beeps to play when a response is needed.
   #define PAUSE_PARK_NO_STEPPER_TIMEOUT           // Enable for XYZ steppers to stay powered on during filament change.
 
-  #define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
-  #define HOME_BEFORE_FILAMENT_CHANGE           // Ensure homing has been completed prior to parking for filament change
+  //#define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
+  //#define HOME_BEFORE_FILAMENT_CHANGE           // Ensure homing has been completed prior to parking for filament change
 
-  #define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
-  #define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
+  //#define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
+  //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
 #endif
 
 // @section tmc
@@ -1881,9 +1880,9 @@
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #if AXIS_IS_TMC(X)
-    #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
+    #define X_CURRENT       760        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
-    #define X_MICROSTEPS     16    // 0..256
+    #define X_MICROSTEPS     256    // 0..256
     #define X_RSENSE          0.11
     #define X_CHAIN_POS      -1    // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
   #endif
@@ -1897,9 +1896,9 @@
   #endif
 
   #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       800
+    #define Y_CURRENT       760
     #define Y_CURRENT_HOME  Y_CURRENT
-    #define Y_MICROSTEPS     16
+    #define Y_MICROSTEPS     256
     #define Y_RSENSE          0.11
     #define Y_CHAIN_POS      -1
   #endif
@@ -1913,9 +1912,9 @@
   #endif
 
   #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       800
+    #define Z_CURRENT       760
     #define Z_CURRENT_HOME  Z_CURRENT
-    #define Z_MICROSTEPS     16
+    #define Z_MICROSTEPS     256
     #define Z_RSENSE          0.11
     #define Z_CHAIN_POS      -1
   #endif
@@ -1937,8 +1936,8 @@
   #endif
 
   #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      800
-    #define E0_MICROSTEPS    16
+    #define E0_CURRENT      900
+    #define E0_MICROSTEPS    256
     #define E0_RSENSE         0.11
     #define E0_CHAIN_POS     -1
   #endif
@@ -2001,7 +2000,7 @@
    * The default SW SPI pins are defined the respective pins files,
    * but you can override or define them here.
    */
-  //#define TMC_USE_SW_SPI
+  #define TMC_USE_SW_SPI
   //#define TMC_SW_MOSI       -1
   //#define TMC_SW_MISO       -1
   //#define TMC_SW_SCK        -1
@@ -2063,7 +2062,7 @@
    * Define you own with
    * { <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }
    */
-  #define CHOPPER_TIMING CHOPPER_DEFAULT_12V
+  #define CHOPPER_TIMING CHOPPER_DEFAULT_24V
 
   /**
    * Monitor Trinamic drivers for error conditions,
@@ -2076,7 +2075,7 @@
    * M912 - Clear stepper driver overtemperature pre-warn condition flag.
    * M122 - Report driver parameters (Requires TMC_DEBUG)
    */
-  //#define MONITOR_DRIVER_STATUS
+  #define MONITOR_DRIVER_STATUS
 
   #if ENABLED(MONITOR_DRIVER_STATUS)
     #define CURRENT_STEP_DOWN     50  // [mA]
@@ -2091,7 +2090,7 @@
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
    * M913 X/Y/Z/E to live tune the setting
    */
-  //#define HYBRID_THRESHOLD
+  #define HYBRID_THRESHOLD
 
   #define X_HYBRID_THRESHOLD     100  // [mm/s]
   #define X2_HYBRID_THRESHOLD    100
@@ -2129,8 +2128,6 @@
    *
    * IMPROVE_HOMING_RELIABILITY tunes acceleration and jerk when
    * homing and adds a guard period for endstop triggering.
-   *
-   * TMC2209 requires STEALTHCHOP enabled for SENSORLESS_HOMING
    */
   //#define SENSORLESS_HOMING // StallGuard capable drivers only
 
@@ -2149,7 +2146,6 @@
     #define Y_STALL_SENSITIVITY  8
     //#define Z_STALL_SENSITIVITY  8
     //#define SPI_ENDSTOPS              // TMC2130 only
-    //#define HOME_USING_SPREADCYCLE
     //#define IMPROVE_HOMING_RELIABILITY
   #endif
 
@@ -2590,28 +2586,25 @@
  */
 //#define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
-  #define CUSTOM_USER_MENU_TITLE "Preheat Commands"
+  //#define CUSTOM_USER_MENU_TITLE "Custom Commands"
   #define USER_SCRIPT_DONE "M117 User Script Done"
   #define USER_SCRIPT_AUDIBLE_FEEDBACK
-  #define USER_SCRIPT_RETURN  // Return to status screen after a script
+  //#define USER_SCRIPT_RETURN  // Return to status screen after a script
 
-  #define USER_DESC_1 "Preheat for " PREHEAT_1_LABEL
-  #define USER_GCODE_1 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
+  #define USER_DESC_1 "Home & UBL Info"
+  #define USER_GCODE_1 "G28\nG29 W"
 
-  #define USER_DESC_2 "Preheat for " PREHEAT_2_LABEL
-  #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
+  #define USER_DESC_2 "Preheat for " PREHEAT_1_LABEL
+  #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
 
-  #define USER_DESC_3 "Preheat for " PREHEAT_3_LABEL
-  #define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_3_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_3_TEMP_HOTEND)
+  #define USER_DESC_3 "Preheat for " PREHEAT_2_LABEL
+  #define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
 
-//  #define USER_DESC_4 "Home & UBL Info"
-//  #define USER_GCODE_4 "G28\nG29 W"
+  #define USER_DESC_4 "Heat Bed/Home/Level"
+  #define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
 
-//  #define USER_DESC_5 "Heat Bed/Home/Level"
-//  #define USER_GCODE_5 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
-
-//  #define USER_DESC_6 "Home & Info"
-//  #define USER_GCODE_6 "G28\nM503"
+  #define USER_DESC_5 "Home & Info"
+  #define USER_GCODE_5 "G28\nM503"
 #endif
 
 /**
